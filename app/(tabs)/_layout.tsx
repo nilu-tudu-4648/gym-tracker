@@ -3,26 +3,36 @@ import React from 'react';
 import { Platform } from 'react-native';
 
 import { HapticTab } from '@/components/HapticTab';
+import { ThemeSwitcher } from '@/components/ThemeSwitcher';
 import { IconSymbol } from '@/components/ui/IconSymbol';
 import TabBarBackground from '@/components/ui/TabBarBackground';
 import { Colors } from '@/constants/Colors';
-import { useColorScheme } from '@/hooks/useColorScheme';
+import { useTheme } from '@/contexts/ThemeContext';
 
 export default function TabLayout() {
-  const colorScheme = useColorScheme();
+  const { currentTheme } = useTheme();
+  const themeColors = Colors[currentTheme];
 
   return (
     <Tabs
       screenOptions={{
-        tabBarActiveTintColor: Colors[colorScheme ?? 'light'].tint,
-        headerShown: false,
+        tabBarActiveTintColor: themeColors.tint,
+        headerShown: true,
         tabBarButton: HapticTab,
         tabBarBackground: TabBarBackground,
+        headerRight: () => <ThemeSwitcher />,
+        headerStyle: {
+          backgroundColor: themeColors.background,
+        },
+        headerTintColor: themeColors.text,
         tabBarStyle: Platform.select({
           ios: {
             position: 'absolute',
           },
-          default: {},
+          default: {
+            backgroundColor: themeColors.background,
+            borderTopWidth: 0
+          },
         }),
       }}>
       <Tabs.Screen
@@ -44,6 +54,13 @@ export default function TabLayout() {
         options={{
           title: 'Payments',
           tabBarIcon: ({ color }) => <IconSymbol size={28} name="attach-money" color={color} />,
+        }}
+      />
+      <Tabs.Screen
+        name="settings"
+        options={{
+          title: 'Settings',
+          tabBarIcon: ({ color }) => <IconSymbol size={28} name="settings" color={color} />,
         }}
       />
     </Tabs>

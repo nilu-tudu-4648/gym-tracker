@@ -3,6 +3,8 @@ import { ScrollView, StyleSheet, TouchableOpacity, View } from "react-native";
 
 import { ThemedText } from "@/components/ThemedText";
 import { ThemedView } from "@/components/ThemedView";
+import { Colors } from "@/constants/Colors";
+import { useTheme } from "@/contexts/ThemeContext";
 
 // Mock data for dashboard
 const DASHBOARD_DATA = {
@@ -82,6 +84,9 @@ const PAYMENT_DUE = [
 ];
 
 export default function DashboardScreen() {
+  const { currentTheme } = useTheme();
+  const themeColors = Colors[currentTheme];
+
   const getStatusColor = (status: string) => {
     switch (status) {
       case "overdue":
@@ -130,7 +135,7 @@ export default function DashboardScreen() {
   };
 
   return (
-    <ScrollView style={styles.container} showsVerticalScrollIndicator={false}>
+    <ScrollView style={[styles.container, { backgroundColor: themeColors.background }]} showsVerticalScrollIndicator={false}>
       {/* Header */}
       <ThemedView style={styles.header} lightColor="#1A1A1A" darkColor="#fff">
         <View>
@@ -142,7 +147,7 @@ export default function DashboardScreen() {
           </ThemedText>
         </View>
         <TouchableOpacity style={styles.notificationButton}>
-          <Ionicons name="notifications" size={24} color="#374151" />
+          <Ionicons name="notifications" size={24} color={themeColors.icon} />
           <View style={styles.notificationBadge} />
         </TouchableOpacity>
       </ThemedView>
@@ -153,7 +158,7 @@ export default function DashboardScreen() {
           Key Metrics
         </ThemedText>
         <View style={styles.metricsGrid}>
-          <View style={styles.metricCard}>
+          <View style={[styles.metricCard, { backgroundColor: themeColors.background }]}>
             <View style={styles.metricIconContainer}>
               <Ionicons name="people" size={20} color="#3B82F6" />
             </View>
@@ -163,7 +168,7 @@ export default function DashboardScreen() {
             <ThemedText style={styles.metricLabel}>Total Members</ThemedText>
           </View>
 
-          <View style={styles.metricCard}>
+          <View style={[styles.metricCard, { backgroundColor: themeColors.background }]}>
             <View
               style={[
                 styles.metricIconContainer,
@@ -178,7 +183,7 @@ export default function DashboardScreen() {
             <ThemedText style={styles.metricLabel}>Active Members</ThemedText>
           </View>
 
-          <View style={styles.metricCard}>
+          <View style={[styles.metricCard, { backgroundColor: themeColors.background }]}>
             <View
               style={[
                 styles.metricIconContainer,
@@ -193,7 +198,7 @@ export default function DashboardScreen() {
             <ThemedText style={styles.metricLabel}>New This Month</ThemedText>
           </View>
 
-          <View style={styles.metricCard}>
+          <View style={[styles.metricCard, { backgroundColor: themeColors.background }]}>
             <View
               style={[
                 styles.metricIconContainer,
