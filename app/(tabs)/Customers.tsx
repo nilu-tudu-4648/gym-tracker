@@ -1,6 +1,7 @@
 import { ThemedText } from "@/components/ThemedText";
 import { ThemedView } from "@/components/ThemedView";
 import { Ionicons } from "@expo/vector-icons";
+import { useRouter } from "expo-router";
 import {
   Image,
   StyleSheet,
@@ -64,6 +65,12 @@ const CUSTOMERS = [
 ];
 
 export default function CustomersScreen() {
+  const router = useRouter();
+
+  const handleCustomerPress = (customerId: string) => {
+    router.push(`/customer/${customerId}` as any);
+  };
+
   return (
     <GestureHandlerRootView>
       <ThemedView style={{ flex: 1, backgroundColor: "#fff" }}>
@@ -108,9 +115,13 @@ export default function CustomersScreen() {
           style={{ flex: 1 }}
           contentContainerStyle={{ paddingBottom: 80 }}
           renderItem={({ item }) => (
-            <View style={styles.customerRow}>
+            <TouchableOpacity 
+              style={styles.customerRow}
+              onPress={() => handleCustomerPress(item.id)}
+              activeOpacity={0.7}
+            >
               <Image source={{ uri: item.avatar }} style={styles.avatar} />
-              <View>
+              <View style={styles.customerInfo}>
                 <ThemedText
                   type="defaultSemiBold"
                   style={{ fontSize: 16, color: "#222" }}
@@ -118,10 +129,11 @@ export default function CustomersScreen() {
                   {item.name}
                 </ThemedText>
                 <ThemedText type="default" style={{ color: "#3B82F6" }}>
-                  {item.status}
+                  {item.status} 
                 </ThemedText>
               </View>
-            </View>
+              <Ionicons name="chevron-forward" size={20} color="#ccc" />
+            </TouchableOpacity>
           )}
         />
       </ThemedView>
@@ -219,5 +231,8 @@ const styles = StyleSheet.create({
   tabLabelActive: {
     fontWeight: "bold",
     color: "#222",
+  },
+  customerInfo: {
+    flex: 1,
   },
 });
