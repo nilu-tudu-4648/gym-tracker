@@ -159,6 +159,7 @@ const styles = StyleSheet.create({
     borderBottomWidth: 1,
     marginHorizontal: 0,
     marginBottom: 8,
+    marginTop: 8
   },
   tab: {
     flex: 1,

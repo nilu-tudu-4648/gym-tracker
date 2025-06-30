@@ -79,17 +79,14 @@ export default function CustomersScreen() {
   return (
     <GestureHandlerRootView>
       <ThemedView style={{ flex: 1 }}>
-        {/* Header */}
-        <View style={styles.header}>
-          <ThemedText type="title" style={styles.headerTitle}>
-            Customers
-          </ThemedText>
-          <TouchableOpacity>
-            <Ionicons name="add" size={28} color={textColor} />
-          </TouchableOpacity>
-        </View>
-        {/* Search */}
-        <View style={styles.searchContainer}>
+        <View
+          style={[
+            styles.searchContainer,
+            {
+              backgroundColor: themeColors.cardBackground,
+            },
+          ]}
+        >
           <Ionicons
             name="search"
             size={18}
@@ -104,11 +101,25 @@ export default function CustomersScreen() {
         </View>
         {/* Filter/Sort */}
         <View style={styles.filterSortRow}>
-          <TouchableOpacity style={styles.filterSortBtn}>
+          <TouchableOpacity
+            style={[
+              styles.filterSortBtn,
+              {
+                backgroundColor: themeColors.cardBackground,
+              },
+            ]}
+          >
             <ThemedText>Status</ThemedText>
             <Ionicons name="chevron-down" size={16} color={textColor} />
           </TouchableOpacity>
-          <TouchableOpacity style={styles.filterSortBtn}>
+          <TouchableOpacity
+            style={[
+              styles.filterSortBtn,
+              {
+                backgroundColor: themeColors.cardBackground,
+              },
+            ]}
+          >
             <ThemedText>Sort</ThemedText>
             <Ionicons name="chevron-down" size={16} color={textColor} />
           </TouchableOpacity>
@@ -135,7 +146,7 @@ export default function CustomersScreen() {
                 <ThemedText type="defaultSemiBold" style={{ fontSize: 16 }}>
                   {item.name}
                 </ThemedText>
-                <ThemedText type="default" style={{ color: "#3B82F6" }}>
+                <ThemedText type="default" style={{ color: themeColors.description }}>
                   {item.status}
                 </ThemedText>
               </View>
@@ -164,10 +175,10 @@ const styles = StyleSheet.create({
   searchContainer: {
     flexDirection: "row",
     alignItems: "center",
-    backgroundColor: "#F3F4F6",
     marginHorizontal: 16,
     borderRadius: 10,
     marginBottom: 10,
+    marginTop: 24,
     height: 40,
   },
   searchInput: {

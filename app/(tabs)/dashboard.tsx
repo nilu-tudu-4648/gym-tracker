@@ -137,7 +137,7 @@ export default function DashboardScreen() {
   return (
     <ScrollView style={[styles.container, { backgroundColor: themeColors.background }]} showsVerticalScrollIndicator={false}>
       {/* Header */}
-      <ThemedView style={styles.header} lightColor="#1A1A1A" darkColor="#fff">
+      <ThemedView style={styles.header}>
         <View>
           <ThemedText type="title" style={styles.headerTitle}>
             Gym Dashboard
@@ -158,7 +158,7 @@ export default function DashboardScreen() {
           Key Metrics
         </ThemedText>
         <View style={styles.metricsGrid}>
-          <View style={[styles.metricCard, { backgroundColor: themeColors.background }]}>
+          <View style={[styles.metricCard, { backgroundColor: themeColors.cardBackground }]}>
             <View style={styles.metricIconContainer}>
               <Ionicons name="people" size={20} color="#3B82F6" />
             </View>
@@ -168,7 +168,7 @@ export default function DashboardScreen() {
             <ThemedText style={styles.metricLabel}>Total Members</ThemedText>
           </View>
 
-          <View style={[styles.metricCard, { backgroundColor: themeColors.background }]}>
+          <View style={[styles.metricCard, { backgroundColor: themeColors.cardBackground }]}>
             <View
               style={[
                 styles.metricIconContainer,
@@ -183,7 +183,7 @@ export default function DashboardScreen() {
             <ThemedText style={styles.metricLabel}>Active Members</ThemedText>
           </View>
 
-          <View style={[styles.metricCard, { backgroundColor: themeColors.background }]}>
+          <View style={[styles.metricCard, { backgroundColor: themeColors.cardBackground }]}>
             <View
               style={[
                 styles.metricIconContainer,
@@ -198,7 +198,7 @@ export default function DashboardScreen() {
             <ThemedText style={styles.metricLabel}>New This Month</ThemedText>
           </View>
 
-          <View style={[styles.metricCard, { backgroundColor: themeColors.background }]}>
+          <View style={[styles.metricCard, { backgroundColor: themeColors.cardBackground }]}>
             <View
               style={[
                 styles.metricIconContainer,
@@ -221,14 +221,14 @@ export default function DashboardScreen() {
           Revenue Overview
         </ThemedText>
         <View style={styles.revenueCards}>
-          <View style={[styles.revenueCard, { backgroundColor: themeColors.background }]}>
+          <View style={[styles.revenueCard, { backgroundColor: themeColors.cardBackground }]}>
             <ThemedText style={[styles.revenueLabel, { color: themeColors.icon }]}>Total Revenue</ThemedText>
             <ThemedText type="defaultSemiBold" style={[styles.revenueValue, { color: themeColors.text }]}>
               ${DASHBOARD_DATA.totalRevenue.toLocaleString()}
             </ThemedText>
             <ThemedText style={[styles.revenuePeriod, { color: themeColors.icon }]}>All time</ThemedText>
           </View>
-          <View style={[styles.revenueCard, { backgroundColor: themeColors.background }]}>
+          <View style={[styles.revenueCard, { backgroundColor: themeColors.cardBackground }]}>
             <ThemedText style={[styles.revenueLabel, { color: themeColors.icon }]}>This Month</ThemedText>
             <ThemedText type="defaultSemiBold" style={[styles.revenueValue, { color: themeColors.text }]}>
               ${DASHBOARD_DATA.monthlyRevenue.toLocaleString()}
@@ -244,28 +244,28 @@ export default function DashboardScreen() {
           Gym Activity
         </ThemedText>
         <View style={styles.activityGrid}>
-          <View style={[styles.activityCard, { backgroundColor: themeColors.background }]}>
+          <View style={[styles.activityCard, { backgroundColor: themeColors.cardBackground }]}>
             <Ionicons name="time" size={24} color="#10B981" />
             <ThemedText type="defaultSemiBold" style={[styles.activityValue, { color: themeColors.text }]}>
               {DASHBOARD_DATA.averageCheckinsPerDay}
             </ThemedText>
             <ThemedText style={[styles.activityLabel, { color: themeColors.icon }]}>Avg Check-ins/Day</ThemedText>
           </View>
-          <View style={[styles.activityCard, { backgroundColor: themeColors.background }]}>
+          <View style={[styles.activityCard, { backgroundColor: themeColors.cardBackground }]}>
             <Ionicons name="flash" size={24} color="#F59E0B" />
             <ThemedText type="defaultSemiBold" style={[styles.activityValue, { color: themeColors.text }]}>
               {DASHBOARD_DATA.peakHours}
             </ThemedText>
             <ThemedText style={[styles.activityLabel, { color: themeColors.icon }]}>Peak Hours</ThemedText>
           </View>
-          <View style={[styles.activityCard, { backgroundColor: themeColors.background }]}>
+          <View style={[styles.activityCard, { backgroundColor: themeColors.cardBackground }]}>
             <Ionicons name="fitness" size={24} color="#8B5CF6" />
             <ThemedText type="defaultSemiBold" style={[styles.activityValue, { color: themeColors.text }]}>
               {DASHBOARD_DATA.equipmentUtilization}%
             </ThemedText>
             <ThemedText style={[styles.activityLabel, { color: themeColors.icon }]}>Equipment Usage</ThemedText>
           </View>
-          <View style={[styles.activityCard, { backgroundColor: themeColors.background }]}>
+          <View style={[styles.activityCard, { backgroundColor: themeColors.cardBackground }]}>
             <Ionicons name="calendar" size={24} color="#3B82F6" />
             <ThemedText type="defaultSemiBold" style={[styles.activityValue, { color: themeColors.text }]}>
               {DASHBOARD_DATA.classesToday}
@@ -276,7 +276,7 @@ export default function DashboardScreen() {
       </ThemedView>
 
       {/* Payment Due */}
-      <ThemedView style={[styles.paymentContainer, { backgroundColor: themeColors.background }]}>
+      <ThemedView style={[styles.paymentContainer, { backgroundColor: themeColors.cardBackground }]}>
         <View style={styles.sectionHeader}>
           <ThemedText type="subtitle" style={styles.sectionTitle}>
             Payment Due
@@ -313,7 +313,7 @@ export default function DashboardScreen() {
       </ThemedView>
 
       {/* Recent Activity */}
-      <ThemedView style={[styles.recentContainer, { backgroundColor: themeColors.background }]}>
+      <ThemedView style={[styles.recentContainer, { backgroundColor: themeColors.cardBackground }]}>
         <View style={styles.sectionHeader}>
           <ThemedText type="subtitle" style={styles.sectionTitle}>
             Recent Activity
@@ -354,30 +354,30 @@ export default function DashboardScreen() {
       </ThemedView>
 
       {/* Quick Actions */}
-      <ThemedView style={[styles.quickActionsContainer, { backgroundColor: themeColors.background }]}>
+      <ThemedView style={[styles.quickActionsContainer, { backgroundColor: themeColors.cardBackground }]}>
         <ThemedText type="subtitle" style={styles.sectionTitle}>
           Quick Actions
         </ThemedText>
         <View style={styles.quickActionsGrid}>
-          <TouchableOpacity style={[styles.quickActionCard, { backgroundColor: themeColors.background }]}>
+          <TouchableOpacity style={[styles.quickActionCard, { backgroundColor: themeColors.cardBackground }]}>
             <Ionicons name="person-add" size={24} color={themeColors.tint} />
             <ThemedText style={[styles.quickActionText, { color: themeColors.text }]}>
               Add Member
             </ThemedText>
           </TouchableOpacity>
-          <TouchableOpacity style={[styles.quickActionCard, { backgroundColor: themeColors.background }]}>
+          <TouchableOpacity style={[styles.quickActionCard, { backgroundColor: themeColors.cardBackground }]}>
             <Ionicons name="card" size={24} color={themeColors.tint} />
             <ThemedText style={[styles.quickActionText, { color: themeColors.text }]}>
               Process Payment
             </ThemedText>
           </TouchableOpacity>
-          <TouchableOpacity style={[styles.quickActionCard, { backgroundColor: themeColors.background }]}>
+          <TouchableOpacity style={[styles.quickActionCard, { backgroundColor: themeColors.cardBackground }]}>
             <Ionicons name="calendar" size={24} color={themeColors.tint} />
             <ThemedText style={[styles.quickActionText, { color: themeColors.text }]}>
               Schedule Class
             </ThemedText>
           </TouchableOpacity>
-          <TouchableOpacity style={[styles.quickActionCard, { backgroundColor: themeColors.background }]}>
+          <TouchableOpacity style={[styles.quickActionCard, { backgroundColor: themeColors.cardBackground }]}>
             <Ionicons name="analytics" size={24} color={themeColors.tint} />
             <ThemedText style={[styles.quickActionText, { color: themeColors.text }]}>
               View Reports
@@ -399,14 +399,12 @@ const styles = StyleSheet.create({
     justifyContent: "space-between",
     alignItems: "center",
     paddingHorizontal: 20,
-    paddingTop: 60,
+    paddingTop: 24,
     paddingBottom: 20,
-    backgroundColor: "#fff",
   },
   headerTitle: {
     fontSize: 24,
     fontWeight: "bold",
-    color: "#111827",
   },
   headerSubtitle: {
     fontSize: 14,
@@ -433,7 +431,6 @@ const styles = StyleSheet.create({
   sectionTitle: {
     fontSize: 18,
     fontWeight: "600",
-    color: "#111827",
     marginBottom: 16,
   },
   metricsGrid: {
@@ -466,12 +463,10 @@ const styles = StyleSheet.create({
   metricValue: {
     fontSize: 24,
     fontWeight: "bold",
-    color: "#111827",
     marginBottom: 4,
   },
   metricLabel: {
     fontSize: 12,
-    color: "#6B7280",
     textAlign: "center",
   },
   revenueContainer: {
@@ -632,6 +627,7 @@ const styles = StyleSheet.create({
     backgroundColor: "#fff",
     paddingHorizontal: 20,
     paddingBottom: 40,
+    paddingTop: 24
   },
   quickActionsGrid: {
     flexDirection: "row",
