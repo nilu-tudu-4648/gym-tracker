@@ -1,7 +1,8 @@
 import { ThemedText } from "@/components/ThemedText";
 import { ThemedView } from "@/components/ThemedView";
 import { Colors } from "@/constants/Colors";
-import { useState } from "react";
+import { useTheme } from "@/contexts/ThemeContext";
+import React, { useState } from "react";
 import {
   FlatList,
   Image,
@@ -14,96 +15,121 @@ const PAYMENTS = [
   {
     id: "1",
     name: "Liam Carter",
-    due: "Due on 20th May",
-    amount: "$120",
+    dueDate: "20th May",
+    amount: "120",
     avatar: "https://randomuser.me/api/portraits/men/1.jpg",
+    status: "pending",
   },
   {
     id: "2",
     name: "Sophia Bennett",
-    due: "Due on 20th May",
-    amount: "$120",
+    dueDate: "20th May",
+    amount: "120",
     avatar: "https://randomuser.me/api/portraits/men/2.jpg",
+    status: "pending",
   },
   {
     id: "3",
     name: "Ethan Harper",
-    due: "Due on 20th May",
-    amount: "$120",
+    dueDate: "20th May",
+    amount: "120",
     avatar: "https://randomuser.me/api/portraits/men/3.jpg",
+    status: "upcoming",
   },
   {
     id: "4",
     name: "Olivia Hayes",
-    due: "Due on 20th May",
-    amount: "$120",
+    dueDate: "20th May",
+    amount: "120",
     avatar: "https://randomuser.me/api/portraits/men/4.jpg",
+    status: "pending",
   },
   {
     id: "5",
     name: "Noah Foster",
-    due: "Due on 20th May",
-    amount: "$120",
+    dueDate: "20th May",
+    amount: "120",
     avatar: "https://randomuser.me/api/portraits/men/5.jpg",
+    status: "upcoming",
   },
 ];
 
-export default function PaymentsScreen() {
-  const [tab, setTab] = useState<"pending" | "upcoming">("pending");
+const tabs = [
+  { key: "pending", label: "Pending" },
+  { key: "upcoming", label: "Upcoming" },
+];
+
+export default function PaymentScreen() {
+  const [activeTab, setActiveTab] = useState("pending");
+  const { currentTheme } = useTheme();
+  const themeColors = Colors[currentTheme];
+
+  const getFilteredPayments = () => {
+    return PAYMENTS.filter(payment => payment.status === activeTab);
+  };
+
+  const handlePaymentPress = (paymentId: string) => {
+    // Handle payment press - could navigate to payment details
+    console.log('Payment pressed:', paymentId);
+  };
 
   return (
-    <ThemedView style={{ flex: 1, backgroundColor: "#fff" }}>
-      <View style={[styles.header, { alignItems: 'center', justifyContent: 'center' }]}>
-        <ThemedText type="title" style={styles.headerTitle}>
-          Payments
-        </ThemedText>
-      </View>
+    <ThemedView style={{ flex: 1 }}>
+
       {/* Tabs */}
-      <View style={styles.tabs}>
-        <TouchableOpacity
-          onPress={() => setTab("pending")}
-          style={[styles.tab, tab === "pending" && styles.tabActive]}
-        >
-          <ThemedText
-            style={[styles.tabText, tab === "pending" && styles.tabTextActive]}
+      <View style={[styles.tabs, { borderBottomColor: themeColors.icon + '20' }]}>
+        {tabs.map((tab) => (
+          <TouchableOpacity
+            key={tab.key}
+            style={[
+              styles.tab,
+              activeTab === tab.key && [styles.tabActive, { borderBottomColor: themeColors.tint }],
+            ]}
+            onPress={() => setActiveTab(tab.key)}
           >
-            Pending
-          </ThemedText>
-        </TouchableOpacity>
-        <TouchableOpacity
-          onPress={() => setTab("upcoming")}
-          style={[styles.tab, tab === "upcoming" && styles.tabActive]}
-        >
-          <ThemedText
-            style={[styles.tabText, tab === "upcoming" && styles.tabTextActive]}
-          >
-            Upcoming
-          </ThemedText>
-        </TouchableOpacity>
+            <ThemedText
+              style={[
+                styles.tabText,
+                { color: themeColors.icon },
+                activeTab === tab.key && [styles.tabTextActive, { color: themeColors.tint }],
+              ]}
+            >
+              {tab.label}
+            </ThemedText>
+          </TouchableOpacity>
+        ))}
       </View>
-      {/* List */}
+
+      {/* Payment List */}
       <FlatList
-        data={PAYMENTS}
+        data={getFilteredPayments()}
         keyExtractor={(item) => item.id}
-        contentContainerStyle={{ paddingBottom: 24 }}
+        style={{ flex: 1 }}
+        contentContainerStyle={{ paddingBottom: 20 }}
         renderItem={({ item }) => (
-          <View style={styles.paymentRow}>
+          <TouchableOpacity
+            style={[styles.paymentRow, { 
+              backgroundColor: themeColors.background,
+              borderBottomColor: themeColors.icon + '20'
+            }]}
+            onPress={() => handlePaymentPress(item.id)}
+          >
             <Image source={{ uri: item.avatar }} style={styles.avatar} />
-            <View style={{ flex: 1 }}>
-              <ThemedText type="defaultSemiBold" style={styles.name}>
+            <View style={styles.paymentInfo}>
+              <ThemedText type="defaultSemiBold" style={[styles.name, { color: themeColors.text }]}>
                 {item.name}
               </ThemedText>
-              <ThemedText type="default" style={styles.due}>
-                {item.due}
+              <ThemedText style={[styles.due, { color: themeColors.icon }]}>
+                Due: {item.dueDate}
               </ThemedText>
             </View>
-            <ThemedText type="defaultSemiBold" style={styles.amount}>
-              {item.amount}
-            </ThemedText>
-          </View>
+            <View style={styles.paymentAmount}>
+              <ThemedText type="defaultSemiBold" style={[styles.amount, { color: themeColors.text }]}>
+                ${item.amount}
+              </ThemedText>
+            </View>
+          </TouchableOpacity>
         )}
-        style={{ flex: 1 }}
-        showsVerticalScrollIndicator={false}
       />
     </ThemedView>
   );
@@ -117,7 +143,6 @@ const styles = StyleSheet.create({
     paddingHorizontal: 20,
     paddingTop: 40,
     paddingBottom: 16,
-    backgroundColor: "#fff",
   },
   backBtn: {
     width: 32,
@@ -128,12 +153,10 @@ const styles = StyleSheet.create({
   headerTitle: {
     fontSize: 20,
     fontWeight: "bold",
-    color: "#222",
   },
   tabs: {
     flexDirection: "row",
     borderBottomWidth: 1,
-    borderBottomColor: "#E5E7EB",
     marginHorizontal: 0,
     marginBottom: 8,
   },
@@ -149,7 +172,6 @@ const styles = StyleSheet.create({
   },
   tabText: {
     fontSize: 16,
-    color: "#687076",
     fontWeight: "600",
   },
   tabTextActive: {
@@ -162,8 +184,6 @@ const styles = StyleSheet.create({
     paddingHorizontal: 20,
     paddingVertical: 16,
     borderBottomWidth: 1,
-    borderBottomColor: "#F3F4F6",
-    backgroundColor: "#fff",
   },
   avatar: {
     width: 48,
@@ -173,17 +193,20 @@ const styles = StyleSheet.create({
   },
   name: {
     fontSize: 16,
-    color: "#222",
   },
   due: {
-    color: "#687076",
     fontSize: 14,
     marginTop: 2,
   },
   amount: {
     fontSize: 18,
-    color: "#222",
     fontWeight: "bold",
     marginLeft: 8,
+  },
+  paymentInfo: {
+    flex: 1,
+  },
+  paymentAmount: {
+    alignItems: "flex-end",
   },
 });

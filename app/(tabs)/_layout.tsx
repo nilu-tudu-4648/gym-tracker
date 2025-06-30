@@ -25,6 +25,9 @@ export default function TabLayout() {
           backgroundColor: themeColors.background,
         },
         headerTintColor: themeColors.text,
+        headerTitleStyle: {
+          fontWeight: '700',
+        },
         tabBarStyle: Platform.select({
           ios: {
             position: 'absolute',

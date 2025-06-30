@@ -1,5 +1,8 @@
 import { ThemedText } from "@/components/ThemedText";
 import { ThemedView } from "@/components/ThemedView";
+import { Colors } from "@/constants/Colors";
+import { useTheme } from "@/contexts/ThemeContext";
+import { useThemeColor } from "@/hooks/useThemeColor";
 import { Ionicons } from "@expo/vector-icons";
 import { useRouter } from "expo-router";
 import {
@@ -60,12 +63,14 @@ const CUSTOMERS = [
     status: "Active",
     avatar: "https://randomuser.me/api/portraits/men/8.jpg",
   },
-  // { id: '9', name: 'Lucas Morgan', status: 'Active', avatar: require('@/assets/avatars/avatar_9.png') },
-  // { id: '10', name: 'Henry Bell', status: 'Active', avatar: require('@/assets/avatars/avatar_10.png') },
 ];
 
 export default function CustomersScreen() {
   const router = useRouter();
+  const textColor = useThemeColor({}, "text");
+  const iconColor = useThemeColor({}, "icon");
+  const { currentTheme } = useTheme();
+  const themeColors = Colors[currentTheme];
 
   const handleCustomerPress = (customerId: string) => {
     router.push(`/customer/${customerId}` as any);
@@ -73,14 +78,14 @@ export default function CustomersScreen() {
 
   return (
     <GestureHandlerRootView>
-      <ThemedView style={{ flex: 1, backgroundColor: "#fff" }}>
+      <ThemedView style={{ flex: 1 }}>
         {/* Header */}
         <View style={styles.header}>
           <ThemedText type="title" style={styles.headerTitle}>
             Customers
           </ThemedText>
           <TouchableOpacity>
-            <Ionicons name="add" size={28} color="#222" />
+            <Ionicons name="add" size={28} color={textColor} />
           </TouchableOpacity>
         </View>
         {/* Search */}
@@ -88,24 +93,24 @@ export default function CustomersScreen() {
           <Ionicons
             name="search"
             size={18}
-            color="#888"
+            color={iconColor}
             style={{ marginLeft: 8 }}
           />
           <TextInput
             placeholder="Search"
-            style={styles.searchInput}
-            placeholderTextColor="#888"
+            style={[styles.searchInput, { color: textColor }]}
+            placeholderTextColor={iconColor}
           />
         </View>
         {/* Filter/Sort */}
         <View style={styles.filterSortRow}>
           <TouchableOpacity style={styles.filterSortBtn}>
-            <ThemedText style={{ color: "#222" }}>Status</ThemedText>
-            <Ionicons name="chevron-down" size={16} color="#222" />
+            <ThemedText>Status</ThemedText>
+            <Ionicons name="chevron-down" size={16} color={textColor} />
           </TouchableOpacity>
           <TouchableOpacity style={styles.filterSortBtn}>
-            <ThemedText style={{ color: "#222" }}>Sort</ThemedText>
-            <Ionicons name="chevron-down" size={16} color="#222" />
+            <ThemedText>Sort</ThemedText>
+            <Ionicons name="chevron-down" size={16} color={textColor} />
           </TouchableOpacity>
         </View>
         {/* Customer List */}
@@ -115,24 +120,26 @@ export default function CustomersScreen() {
           style={{ flex: 1 }}
           contentContainerStyle={{ paddingBottom: 80 }}
           renderItem={({ item }) => (
-            <TouchableOpacity 
-              style={styles.customerRow}
+            <TouchableOpacity
+              style={[
+                styles.customerRow,
+                {
+                  borderBottomColor: themeColors.icon + "20",
+                },
+              ]}
               onPress={() => handleCustomerPress(item.id)}
               activeOpacity={0.7}
             >
               <Image source={{ uri: item.avatar }} style={styles.avatar} />
               <View style={styles.customerInfo}>
-                <ThemedText
-                  type="defaultSemiBold"
-                  style={{ fontSize: 16, color: "#222" }}
-                >
+                <ThemedText type="defaultSemiBold" style={{ fontSize: 16 }}>
                   {item.name}
                 </ThemedText>
                 <ThemedText type="default" style={{ color: "#3B82F6" }}>
-                  {item.status} 
+                  {item.status}
                 </ThemedText>
               </View>
-              <Ionicons name="chevron-forward" size={20} color="#ccc" />
+              <Ionicons name="chevron-forward" size={20} color={iconColor} />
             </TouchableOpacity>
           )}
         />
@@ -149,12 +156,10 @@ const styles = StyleSheet.create({
     paddingHorizontal: 20,
     paddingTop: 40,
     paddingBottom: 16,
-    backgroundColor: "#fff",
   },
   headerTitle: {
     fontSize: 20,
     fontWeight: "bold",
-    color: "#222",
   },
   searchContainer: {
     flexDirection: "row",
@@ -169,7 +174,6 @@ const styles = StyleSheet.create({
     flex: 1,
     marginLeft: 8,
     fontSize: 16,
-    color: "#222",
   },
   filterSortRow: {
     flexDirection: "row",
@@ -185,7 +189,6 @@ const styles = StyleSheet.create({
     paddingHorizontal: 12,
     paddingVertical: 6,
     gap: 4,
-    color: "#1F8E52",
   },
   customerRow: {
     flexDirection: "row",
@@ -194,7 +197,6 @@ const styles = StyleSheet.create({
     paddingHorizontal: 20,
     paddingVertical: 12,
     borderBottomWidth: 1,
-    borderBottomColor: "#F3F4F6",
   },
   avatar: {
     width: 48,
@@ -225,12 +227,10 @@ const styles = StyleSheet.create({
   },
   tabLabel: {
     fontSize: 12,
-    color: "#222",
     marginTop: 2,
   },
   tabLabelActive: {
     fontWeight: "bold",
-    color: "#222",
   },
   customerInfo: {
     flex: 1,

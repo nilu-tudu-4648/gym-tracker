@@ -1,5 +1,7 @@
 import { ThemedText } from "@/components/ThemedText";
 import { ThemedView } from "@/components/ThemedView";
+import { Colors } from "@/constants/Colors";
+import { useTheme } from "@/contexts/ThemeContext";
 import { Ionicons } from "@expo/vector-icons";
 import { useLocalSearchParams, useRouter } from "expo-router";
 import {
@@ -153,6 +155,8 @@ const CUSTOMER_DATA = {
 export default function CustomerDetailScreen() {
   const { id } = useLocalSearchParams();
   const router = useRouter();
+  const { currentTheme } = useTheme();
+  const themeColors = Colors[currentTheme];
   const customer = CUSTOMER_DATA[id as keyof typeof CUSTOMER_DATA];
 
   if (!customer) {
@@ -166,112 +170,112 @@ export default function CustomerDetailScreen() {
   return (
     <ThemedView style={styles.container}>
       {/* Header */}
-      <View style={styles.header}>
+      <View style={[styles.header, { backgroundColor: themeColors.background, borderBottomColor: themeColors.icon + '20' }]}>
         <TouchableOpacity onPress={() => router.back()} style={styles.backButton}>
-          <Ionicons name="arrow-back" size={24} color="#222" />
+          <Ionicons name="arrow-back" size={24} color={themeColors.text} />
         </TouchableOpacity>
-        <ThemedText type="title" style={styles.headerTitle}>
+        <ThemedText type="title" style={[styles.headerTitle, { color: themeColors.text }]}>
           Customer Profile
         </ThemedText>
         <TouchableOpacity style={styles.editButton}>
-          <Ionicons name="create-outline" size={24} color="#222" />
+          <Ionicons name="create-outline" size={24} color={themeColors.text} />
         </TouchableOpacity>
       </View>
 
       <ScrollView style={styles.scrollView} showsVerticalScrollIndicator={false}>
         {/* Profile Section */}
-        <View style={styles.profileSection}>
+        <View style={[styles.profileSection, { backgroundColor: themeColors.background }]}>
           <Image source={{ uri: customer.avatar }} style={styles.profileAvatar} />
           <View style={styles.profileInfo}>
-            <ThemedText type="title" style={styles.customerName}>
+            <ThemedText type="title" style={[styles.customerName, { color: themeColors.text }]}>
               {customer.name}
             </ThemedText>
             <View style={styles.statusContainer}>
               <View style={styles.statusDot} />
               <ThemedText style={styles.statusText}>{customer.status}</ThemedText>
             </View>
-            <ThemedText style={styles.membershipType}>{customer.membershipType} Member</ThemedText>
+            <ThemedText style={[styles.membershipType, { color: themeColors.icon }]}>{customer.membershipType} Member</ThemedText>
           </View>
         </View>
 
         {/* Contact Information */}
-        <View style={styles.section}>
-          <ThemedText type="defaultSemiBold" style={styles.sectionTitle}>
+        <View style={[styles.section, { borderBottomColor: themeColors.icon + '20' }]}>
+          <ThemedText type="defaultSemiBold" style={[styles.sectionTitle, { color: themeColors.text }]}>
             Contact Information
           </ThemedText>
           <View style={styles.infoRow}>
-            <Ionicons name="mail-outline" size={20} color="#666" />
-            <ThemedText style={styles.infoText}>{customer.email}</ThemedText>
+            <Ionicons name="mail-outline" size={20} color={themeColors.icon} />
+            <ThemedText style={[styles.infoText, { color: themeColors.icon }]}>{customer.email}</ThemedText>
           </View>
           <View style={styles.infoRow}>
-            <Ionicons name="call-outline" size={20} color="#666" />
-            <ThemedText style={styles.infoText}>{customer.phone}</ThemedText>
+            <Ionicons name="call-outline" size={20} color={themeColors.icon} />
+            <ThemedText style={[styles.infoText, { color: themeColors.icon }]}>{customer.phone}</ThemedText>
           </View>
           <View style={styles.infoRow}>
-            <Ionicons name="location-outline" size={20} color="#666" />
-            <ThemedText style={styles.infoText}>{customer.address}</ThemedText>
+            <Ionicons name="location-outline" size={20} color={themeColors.icon} />
+            <ThemedText style={[styles.infoText, { color: themeColors.icon }]}>{customer.address}</ThemedText>
           </View>
         </View>
 
         {/* Membership Details */}
-        <View style={styles.section}>
-          <ThemedText type="defaultSemiBold" style={styles.sectionTitle}>
+        <View style={[styles.section, { borderBottomColor: themeColors.icon + '20' }]}>
+          <ThemedText type="defaultSemiBold" style={[styles.sectionTitle, { color: themeColors.text }]}>
             Membership Details
           </ThemedText>
           <View style={styles.infoRow}>
-            <Ionicons name="calendar-outline" size={20} color="#666" />
-            <ThemedText style={styles.infoText}>Joined: {customer.joinDate}</ThemedText>
+            <Ionicons name="calendar-outline" size={20} color={themeColors.icon} />
+            <ThemedText style={[styles.infoText, { color: themeColors.icon }]}>Joined: {customer.joinDate}</ThemedText>
           </View>
           <View style={styles.infoRow}>
-            <Ionicons name="time-outline" size={20} color="#666" />
-            <ThemedText style={styles.infoText}>Last Visit: {customer.lastVisit}</ThemedText>
+            <Ionicons name="time-outline" size={20} color={themeColors.icon} />
+            <ThemedText style={[styles.infoText, { color: themeColors.icon }]}>Last Visit: {customer.lastVisit}</ThemedText>
           </View>
           <View style={styles.infoRow}>
-            <Ionicons name="fitness-outline" size={20} color="#666" />
-            <ThemedText style={styles.infoText}>Total Visits: {customer.totalVisits}</ThemedText>
+            <Ionicons name="fitness-outline" size={20} color={themeColors.icon} />
+            <ThemedText style={[styles.infoText, { color: themeColors.icon }]}>Total Visits: {customer.totalVisits}</ThemedText>
           </View>
           <View style={styles.infoRow}>
-            <Ionicons name="person-outline" size={20} color="#666" />
-            <ThemedText style={styles.infoText}>Trainer: {customer.personalTrainer}</ThemedText>
+            <Ionicons name="person-outline" size={20} color={themeColors.icon} />
+            <ThemedText style={[styles.infoText, { color: themeColors.icon }]}>Trainer: {customer.personalTrainer}</ThemedText>
           </View>
         </View>
 
         {/* Emergency Contact */}
-        <View style={styles.section}>
-          <ThemedText type="defaultSemiBold" style={styles.sectionTitle}>
+        <View style={[styles.section, { borderBottomColor: themeColors.icon + '20' }]}>
+          <ThemedText type="defaultSemiBold" style={[styles.sectionTitle, { color: themeColors.text }]}>
             Emergency Contact
           </ThemedText>
           <View style={styles.infoRow}>
-            <Ionicons name="person-outline" size={20} color="#666" />
-            <ThemedText style={styles.infoText}>{customer.emergencyContact}</ThemedText>
+            <Ionicons name="person-outline" size={20} color={themeColors.icon} />
+            <ThemedText style={[styles.infoText, { color: themeColors.icon }]}>{customer.emergencyContact}</ThemedText>
           </View>
           <View style={styles.infoRow}>
-            <Ionicons name="call-outline" size={20} color="#666" />
-            <ThemedText style={styles.infoText}>{customer.emergencyPhone}</ThemedText>
+            <Ionicons name="call-outline" size={20} color={themeColors.icon} />
+            <ThemedText style={[styles.infoText, { color: themeColors.icon }]}>{customer.emergencyPhone}</ThemedText>
           </View>
         </View>
 
         {/* Notes */}
-        <View style={styles.section}>
-          <ThemedText type="defaultSemiBold" style={styles.sectionTitle}>
+        <View style={[styles.section, { borderBottomColor: themeColors.icon + '20' }]}>
+          <ThemedText type="defaultSemiBold" style={[styles.sectionTitle, { color: themeColors.text }]}>
             Notes
           </ThemedText>
-          <View style={styles.notesContainer}>
-            <ThemedText style={styles.notesText}>{customer.notes}</ThemedText>
+          <View style={[styles.notesContainer, { backgroundColor: themeColors.icon + '10' }]}>
+            <ThemedText style={[styles.notesText, { color: themeColors.icon }]}>{customer.notes}</ThemedText>
           </View>
         </View>
 
         {/* Action Buttons */}
         <View style={styles.actionButtons}>
-          <TouchableOpacity style={styles.actionButton}>
+          <TouchableOpacity style={[styles.actionButton, { backgroundColor: themeColors.tint }]}>
             <Ionicons name="call" size={20} color="#fff" />
             <ThemedText style={styles.actionButtonText}>Call</ThemedText>
           </TouchableOpacity>
-          <TouchableOpacity style={styles.actionButton}>
+          <TouchableOpacity style={[styles.actionButton, { backgroundColor: themeColors.tint }]}>
             <Ionicons name="mail" size={20} color="#fff" />
             <ThemedText style={styles.actionButtonText}>Email</ThemedText>
           </TouchableOpacity>
-          <TouchableOpacity style={styles.actionButton}>
+          <TouchableOpacity style={[styles.actionButton, { backgroundColor: themeColors.tint }]}>
             <Ionicons name="calendar" size={20} color="#fff" />
             <ThemedText style={styles.actionButtonText}>Schedule</ThemedText>
           </TouchableOpacity>
@@ -284,7 +288,6 @@ export default function CustomerDetailScreen() {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: "#fff",
   },
   header: {
     flexDirection: "row",
@@ -293,9 +296,7 @@ const styles = StyleSheet.create({
     paddingHorizontal: 20,
     paddingTop: 40,
     paddingBottom: 16,
-    backgroundColor: "#fff",
     borderBottomWidth: 1,
-    borderBottomColor: "#F3F4F6",
   },
   backButton: {
     padding: 8,
@@ -303,7 +304,6 @@ const styles = StyleSheet.create({
   headerTitle: {
     fontSize: 18,
     fontWeight: "bold",
-    color: "#222",
   },
   editButton: {
     padding: 8,
@@ -315,7 +315,6 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     alignItems: "center",
     padding: 20,
-    backgroundColor: "#fff",
   },
   profileAvatar: {
     width: 80,
@@ -329,7 +328,6 @@ const styles = StyleSheet.create({
   customerName: {
     fontSize: 24,
     fontWeight: "bold",
-    color: "#222",
     marginBottom: 4,
   },
   statusContainer: {
@@ -350,18 +348,15 @@ const styles = StyleSheet.create({
     fontWeight: "500",
   },
   membershipType: {
-    color: "#666",
     fontSize: 14,
   },
   section: {
     padding: 20,
     borderBottomWidth: 1,
-    borderBottomColor: "#F3F4F6",
   },
   sectionTitle: {
     fontSize: 16,
     fontWeight: "600",
-    color: "#222",
     marginBottom: 12,
   },
   infoRow: {
@@ -372,17 +367,14 @@ const styles = StyleSheet.create({
   infoText: {
     marginLeft: 12,
     fontSize: 14,
-    color: "#666",
     flex: 1,
   },
   notesContainer: {
-    backgroundColor: "#F9FAFB",
     padding: 12,
     borderRadius: 8,
   },
   notesText: {
     fontSize: 14,
-    color: "#666",
     lineHeight: 20,
   },
   actionButtons: {
@@ -394,7 +386,6 @@ const styles = StyleSheet.create({
   actionButton: {
     flexDirection: "row",
     alignItems: "center",
-    backgroundColor: "#3B82F6",
     paddingHorizontal: 16,
     paddingVertical: 10,
     borderRadius: 8,
