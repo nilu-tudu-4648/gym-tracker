@@ -3,7 +3,39 @@ import { Stack } from 'expo-router';
 import { StatusBar } from 'expo-status-bar';
 import 'react-native-reanimated';
 
-import { ThemeProvider } from '@/contexts/ThemeContext';
+import { ThemeProvider, useTheme } from '@/contexts/ThemeContext';
+
+import { Colors } from '@/constants/Colors';
+
+function StackLayout() {
+  const { currentTheme } = useTheme();
+  const themeColors = Colors[currentTheme];
+
+  return (
+    <Stack
+      screenOptions={{
+        headerStyle: {
+          backgroundColor: themeColors.background,
+        },
+        headerTintColor: themeColors.text,
+        headerTitleStyle: {
+          fontWeight: "700",
+        },
+      }}
+    >
+      <Stack.Screen name="(tabs)" options={{ headerShown: false }} />
+      <Stack.Screen 
+        name="customer/create" 
+        options={{ 
+          title: "Create User",
+          headerShown: true,
+        }} 
+      />
+      <Stack.Screen name="customer/[id]" options={{ headerShown: false }} />
+      <Stack.Screen name="+not-found" />
+    </Stack>
+  );
+}
 
 export default function RootLayout() {
   const [loaded] = useFonts({
@@ -17,11 +49,7 @@ export default function RootLayout() {
 
   return (
     <ThemeProvider>
-      <Stack>
-        <Stack.Screen name="(tabs)" options={{ headerShown: false }} />
-        <Stack.Screen name="customer/[id]" options={{ headerShown: false }} />
-        <Stack.Screen name="+not-found" />
-      </Stack>
+      <StackLayout />
       <StatusBar style="auto" />
     </ThemeProvider>
   );
