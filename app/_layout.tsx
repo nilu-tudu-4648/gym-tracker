@@ -10,7 +10,7 @@ import { Colors } from '@/constants/Colors';
 function StackLayout() {
   const { currentTheme } = useTheme();
   const themeColors = Colors[currentTheme];
-
+  // eas build -p android --profile preview
   return (
     <Stack
       screenOptions={{

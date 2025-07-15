@@ -5,6 +5,7 @@ import { ThemedText } from "@/components/ThemedText";
 import { ThemedView } from "@/components/ThemedView";
 import { Colors } from "@/constants/Colors";
 import { useTheme } from "@/contexts/ThemeContext";
+import { useRouter } from "expo-router";
 
 // Mock data for dashboard
 const DASHBOARD_DATA = {
@@ -86,7 +87,7 @@ const PAYMENT_DUE = [
 export default function DashboardScreen() {
   const { currentTheme } = useTheme();
   const themeColors = Colors[currentTheme];
-
+  const router = useRouter();
   const getStatusColor = (status: string) => {
     switch (status) {
       case "overdue":
@@ -139,7 +140,7 @@ export default function DashboardScreen() {
       {/* Header */}
       <ThemedView style={styles.header}>
         <View>
-          <ThemedText type="title" style={styles.headerTitle}>
+          <ThemedText onPress={() => router.push("/(tabs)/Customers")} type="title" style={styles.headerTitle}>
             Gym Dashboard
           </ThemedText>
           <ThemedText style={styles.headerSubtitle}>

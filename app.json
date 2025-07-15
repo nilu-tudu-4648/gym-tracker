@@ -1,6 +1,6 @@
 {
   "expo": {
-    "name": "gym-tracker",
+    "name": "MyGYM",
     "slug": "gym-tracker",
     "version": "1.0.0",
     "orientation": "portrait",
@@ -16,7 +16,8 @@
         "foregroundImage": "./assets/images/adaptive-icon.png",
         "backgroundColor": "#ffffff"
       },
-      "edgeToEdgeEnabled": true
+      "edgeToEdgeEnabled": true,
+      "package": "com.nilesh98.gymtracker"
     },
     "web": {
       "bundler": "metro",
@@ -37,6 +38,12 @@
     ],
     "experiments": {
       "typedRoutes": true
+    },
+    "extra": {
+      "router": {},
+      "eas": {
+        "projectId": "7bfdd261-fdeb-4525-bb95-0dce7d073a00"
+      }
     }
   }
 }
